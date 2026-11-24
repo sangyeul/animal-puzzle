@@ -1,0 +1,73 @@
+/* 자동 생성 — 고치지 말 것. 원본 design/tokens.json, 생성 node scripts/tokens.mjs */
+:root {
+  color-scheme: light dark;
+  --bg: #F5F2EA;
+  --surface: #FFFDF8;
+  --ink: #34343B;
+  --ink-soft: #6E6A75;
+  --line: #D2D0CA;
+  --border: #34343B;
+  --primary: #9DBBA2;
+  --on-primary: #23352A;
+  --secondary: #EFD3CC;
+  --gold: #DDB660;
+  --gold-line: #94742A;
+  --heart: #E39A9A;
+  --heart-line: #B05050;
+  --danger: #D64545;
+  --danger-line: #7A2323;
+  --region-0: #F6CFC6;
+  --region-1: #F7E0AF;
+  --region-2: #D4E9BD;
+  --region-3: #C6E4E6;
+  --region-4: #D0D7EF;
+  --region-5: #E8CEEB;
+  --region-6: #F5D4B9;
+  --region-7: #DDDCD2;
+  --region-8: #C0E2CF;
+  --font-title: "Malang Title", "Malang Body", system-ui, sans-serif;
+  --font-body: "Malang Body", system-ui, sans-serif;
+  --text-body: 16px;
+  --text-small: 13px;
+  --text-title: 40px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --radius-button: 14px;
+  --radius-card: 20px;
+  --radius-board: 16px;
+  --touch: 48px;
+  --motion-pop: 340ms;
+  --motion-squash: 220ms;
+  --motion-oing: 600ms;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1D221F;
+    --surface: #272D29;
+    --ink: #ECEAE4;
+    --ink-soft: #A5A9A2;
+    --line: #4B4E4A;
+    --border: #0E110F;
+    --primary: #9DBBA2;
+    --on-primary: #1C2A20;
+    --secondary: #5B4A47;
+    --gold: #E2C172;
+    --gold-line: #E2C172;
+    --heart: #EBA3A3;
+    --heart-line: #EBA3A3;
+    --danger: #FF8A80;
+    --danger-line: #0E110F;
+    --region-0: #977770;
+    --region-1: #98865B;
+    --region-2: #788E68;
+    --region-3: #6B8A8D;
+    --region-4: #747E95;
+    --region-5: #8A7692;
+    --region-6: #967B64;
+    --region-7: #81837B;
+    --region-8: #668878;
+  }
+}

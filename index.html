@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>말랑 스도쿠</title>
+<meta name="description" content="말랑말랑, 마음이 풀리는 퍼즐. 가로·세로·색 구역마다 떡 친구를 하나씩 놓아요.">
+<meta name="theme-color" content="#F5F2EA" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1D221F" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="말랑 스도쿠">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="css/tokens.css?v=20261124100927">
+<link rel="stylesheet" href="css/style.css?v=20261124100927">
+</head>
+<body>
+
+<main id="home" class="view">
+  <header class="top">
+    <div id="mascot" class="mascot" aria-hidden="true"></div>
+    <div class="top-text">
+      <h1>말랑 스도쿠</h1>
+      <p id="summary"></p>
+    </div>
+    <button id="btn-dex" class="btn dex-btn">도감<small id="dex-count"></small></button>
+  </header>
+
+  <section class="card">
+    <h2>퍼즐 <small>풀 때마다 판 크기가 무작위로 바뀝니다</small></h2>
+    <div id="path" class="path"></div>
+    <button id="btn-level" class="btn primary"></button>
+    <button id="btn-resume" class="btn" hidden></button>
+  </section>
+
+  <section class="card">
+    <h2>오늘의 퍼즐 <small id="streak"></small></h2>
+    <div id="stamps" class="stamps"></div>
+    <button id="btn-daily" class="btn"></button>
+  </section>
+
+  <section class="free">
+    <h2>자유 플레이 <small>판 크기를 고르면 새 문제가 나옵니다</small></h2>
+    <div id="sizes" class="sizes"></div>
+  </section>
+
+  <footer class="links">
+    <button id="btn-how" class="link">게임 방법</button>
+    <button id="btn-settings" class="link">설정</button>
+  </footer>
+</main>
+
+<main id="play" class="view" hidden>
+  <header class="bar">
+    <button id="btn-back" class="icon" aria-label="처음 화면으로">
+      <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="title"><strong id="play-title"></strong><span id="play-size" class="pips" role="img"></span></div>
+    <div class="side"><span id="lives" class="lives" role="img"></span><span id="timer" class="timer">0:00</span></div>
+  </header>
+
+  <div id="board" class="board" role="grid" aria-label="퍼즐 판"></div>
+  <p id="message" class="message" aria-live="polite"></p>
+
+  <div class="tools">
+    <button id="btn-undo" class="btn">되돌리기</button>
+    <button id="btn-hint" class="btn">힌트</button>
+    <button id="btn-restart" class="btn">다시 시작</button>
+  </div>
+  <button id="btn-how-play" class="link">게임 방법 보기</button>
+</main>
+
+<dialog id="dlg-win">
+  <div id="win-animal" class="win-animal" aria-hidden="true"></div>
+  <h2 id="win-title">풀었어요!</h2>
+  <div id="win-stars" class="win-stars"></div>
+  <p id="win-detail"></p>
+  <p id="win-friend" class="win-friend" hidden></p>
+  <button id="btn-next" class="btn primary"></button>
+  <button id="btn-win-home" class="btn">처음 화면으로</button>
+</dialog>
+
+<dialog id="dlg-fail">
+  <div id="fail-animal" class="win-animal still" aria-hidden="true"></div>
+  <h2>목숨을 다 썼어요</h2>
+  <p class="note">같은 문제를 처음부터 다시 풀 수 있어요.</p>
+  <button id="btn-retry" class="btn primary">다시 도전</button>
+  <button id="btn-fail-home" class="btn">처음 화면으로</button>
+</dialog>
+
+<dialog id="dlg-dex">
+  <h2>떡 친구 도감</h2>
+  <p class="note">퍼즐을 풀면 새 친구가 열리고, 열린 친구가 판에 나옵니다. 친구를 눌러 보세요.</p>
+  <div id="dex" class="dex"></div>
+  <button class="btn primary" data-close autofocus>닫기</button>
+</dialog>
+
+<dialog id="dlg-how">
+  <h2>게임 방법</h2>
+  <ol class="rules">
+    <li>가로줄마다 떡은 하나입니다.</li>
+    <li>세로줄마다 떡은 하나입니다.</li>
+    <li>같은 색 구역마다 떡은 하나입니다.</li>
+    <li>떡끼리는 맞닿을 수 없습니다. 대각선으로 닿는 것도 안 됩니다.</li>
+  </ol>
+  <h3>조작</h3>
+  <ul class="rules">
+    <li>칸을 한 번 누르면 하얀 ✕ 표시(떡이 없는 칸이라는 메모)입니다. 다시 누르면 지워집니다.</li>
+    <li>칸을 빠르게 두 번 누르면 떡이 있는 칸인지 확인합니다. 맞으면 떡이 나타납니다.</li>
+    <li>틀리면 빨간 ✕가 남고 목숨(♥)이 하나 줍니다. 빨간 ✕는 지울 수 없습니다.</li>
+    <li>목숨 3개를 다 쓰면 그 판은 실패이고, 같은 문제를 처음부터 다시 풀 수 있습니다.</li>
+    <li>손가락을 댄 채 끌면 지나간 빈칸에 하얀 ✕가 표시됩니다.</li>
+  </ul>
+  <h3>별</h3>
+  <ul class="rules">
+    <li>퍼즐을 풀면 별 1개를 받습니다.</li>
+    <li>실수와 힌트 없이 풀면 별 1개를 더 받습니다.</li>
+    <li>기준 시간 안에 풀면 별 1개를 더 받습니다.</li>
+  </ul>
+  <button class="btn primary" data-close>닫기</button>
+</dialog>
+
+<dialog id="dlg-settings">
+  <h2>설정</h2>
+  <label class="option"><input type="checkbox" id="opt-timer"><span>걸린 시간 표시</span></label>
+  <label class="option"><input type="checkbox" id="opt-sound"><span>효과음</span></label>
+  <label class="option" id="row-vibrate"><input type="checkbox" id="opt-vibrate"><span>진동</span></label>
+  <button id="btn-wipe" class="btn danger">기록 모두 지우기</button>
+  <button class="btn primary" data-close>닫기</button>
+</dialog>
+
+<script type="module" src="js/app.js?v=20261124100927"></script>
+<script>
+// 파일을 받다가 어긋나 화면이 뜨지 않으면, 저장본을 비우고 한 번만 새로 받는다.
+window.addEventListener('load', function () {
+  setTimeout(function () {
+    try {
+      if (window.__booted || sessionStorage.getItem('healed')) return;
+      sessionStorage.setItem('healed', '1');
+    } catch (error) { return; }
+    var reload = function () { location.reload(); };
+    var wipe = window.caches
+      ? caches.keys().then(function (keys) { return Promise.all(keys.map(function (key) { return caches.delete(key); })); })
+      : Promise.resolve();
+    wipe.then(reload, reload);
+  }, 3000);
+});
+</script>
+</body>
+</html>
